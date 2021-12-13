@@ -316,12 +316,13 @@ function writeWorkshopRules(owArrays, maxVoices, isCompressionEnabled=false) {
         owArrays = compressSongArrays(owArrays);
         
         firstRule += `Global.compressedElementLength = ${COMPRESSED_ELEMENT_LENGTH};\n` +
-
         // Values needed for decompression: 
         // lengths of the last elements of the compressed arrays (which are required due to 
         // the fact that data such as 00406 turns into 406 when pasted as an integer) and 
         // lengths of the individual song data elements.
-        `Global.compressionInfo = Array(` +
+        `Global.compressionInfo = Array(Array(${owArrays["pitchArrays"].slice(-1)[0].length},` +
+                                             `${owArrays["timeArrays"].slice(-1)[0].length},` +
+                                             `${owArrays["chordArrays"].slice(-1)[0].length}),` +
                                        `Array(${SONG_DATA_ELEMENT_LENGTHS["pitchArrays"]},` +
                                              `${SONG_DATA_ELEMENT_LENGTHS["timeArrays"]},` +
                                              `${SONG_DATA_ELEMENT_LENGTHS["chordArrays"]}));`;
