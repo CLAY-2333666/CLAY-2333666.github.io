@@ -62,7 +62,7 @@ const SONG_DATA_ELEMENT_LENGTHS = {
 const COMPRESSED_ELEMENT_LENGTH = 7;
 
 
-function convertMidi(mid, settings={}, isCompressionEnabled=true) {
+function convertMidi(mid, settings={}, isCompressionEnabled=false) {
     /*
     param mid:  a Midi object created by Tonejs/Midi
     param settings: a JS object containing user parameters for 
@@ -90,9 +90,10 @@ function convertMidi(mid, settings={}, isCompressionEnabled=true) {
 
     let arrayInfo = {};
     if (midiInfo.chords.size !== 0) {
+        
         arrayInfo = convertToArray(midiInfo.chords, mid.duration, isCompressionEnabled);
 
-        workshopRules = writeWorkshopRules(arrayInfo.owArrays, settings["voices"], isCompressionEnabled);
+        workshopRules = writeWorkshopRules(arrayInfo.owArrays, settings["voices"], false);
     }
     
     return { 
@@ -301,17 +302,14 @@ function compressSongArrays(owArrays) {
 }
 
 
-function writeWorkshopRules(owArrays, maxVoices, isCompressionEnabled) {
+function writeWorkshopRules(owArrays, maxVoices, isCompressionEnabled=false) {
     // Creates workshop rules containing the song data in arrays, 
     // ready to be pasted into Overwatch
 
     let workshopRules = [];
 
     // The first rule contains general data: amount of voices (bots) required, max array size, etc.
-    let firstRule = [`rule(\"General song data\"){event{Ongoing-Global;}actions{\n` +
-                     `Global.maxBots = ${maxVoices};\n` +
-                     `Global.maxArraySize = ${MAX_OW_ARRAY_SIZE};\n` +
-                     `Global.isCompressionEnabled = ${isCompressionEnabled};\n`];
+    let firstRule = [];
 
     if (isCompressionEnabled) {
 
@@ -323,9 +321,7 @@ function writeWorkshopRules(owArrays, maxVoices, isCompressionEnabled) {
         // lengths of the last elements of the compressed arrays (which are required due to 
         // the fact that data such as 00406 turns into 406 when pasted as an integer) and 
         // lengths of the individual song data elements.
-        `Global.compressionInfo = Array(Array(${owArrays["pitchArrays"].slice(-1)[0].length},` +
-                                             `${owArrays["timeArrays"].slice(-1)[0].length},` +
-                                             `${owArrays["chordArrays"].slice(-1)[0].length}),` +
+        `Global.compressionInfo = Array(` +
                                        `Array(${SONG_DATA_ELEMENT_LENGTHS["pitchArrays"]},` +
                                              `${SONG_DATA_ELEMENT_LENGTHS["timeArrays"]},` +
                                              `${SONG_DATA_ELEMENT_LENGTHS["chordArrays"]}));`;
