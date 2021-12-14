@@ -328,7 +328,7 @@ function writeWorkshopRules(owArrays, maxVoices, isCompressionEnabled=false) {
                                              `${SONG_DATA_ELEMENT_LENGTHS["chordArrays"]}));`;
     }
 
-    firstRule += `}}\n`;
+    firstRule += ``;
     workshopRules.push(firstRule);
 
     // Write all 3 arrays in owArrays to workshop rules
