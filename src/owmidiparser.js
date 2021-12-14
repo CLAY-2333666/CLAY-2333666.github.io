@@ -31,7 +31,7 @@ const DEFAULT_SETTINGS = {
 
 // Maximum amount of elements in a single array of the song data rules.
 // Overwatch arrays are limited to 1000 elements per dimension.
-const MAX_OW_ARRAY_SIZE = 1000;
+const MAX_OW_ARRAY_SIZE = 10000;
 
 // Maximum amount of array elements allowed across all song data rules. 
 // Total Element Count (TEC) increases by 2 per number element in an array, and is limited to 20 000 (including the base script).
@@ -341,7 +341,7 @@ function writeWorkshopRules(owArrays, maxVoices, isCompressionEnabled=false) {
         let index = 0;
         while (index < songArray.length) {
 
-            let actions = `Global.${arrayName}[${owArrayIndex}] = Array(${songArray[index]}`;
+            let actions = `${arrayName} = Array(${songArray[index]}`;
             owArrayIndex += 1;
             index += 1;
             
@@ -356,8 +356,8 @@ function writeWorkshopRules(owArrays, maxVoices, isCompressionEnabled=false) {
                 index += 1;
             }
 
-            let newRule = `rule(\"${arrayName}\"){event{Ongoing-Global;}` +
-                          `actions{${actions});}}\n`;       
+            let newRule = `` +
+                          `${actions});}\n`;       
             workshopRules.push(newRule);
         }
     }
