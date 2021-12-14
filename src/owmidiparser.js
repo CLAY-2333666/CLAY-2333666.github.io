@@ -13,6 +13,7 @@ const PIANO_RANGE = Object.freeze({
 });
 const OCTAVE = 12;
 
+
 /* Settings for parsing the midi data.
     - startTime: time (seconds) in the midi file when this script begins reading the data
     - voices: amount of bots required to play the resulting script, maximum amount of pitches allowed in any chord.
