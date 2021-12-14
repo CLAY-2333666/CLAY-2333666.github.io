@@ -2,8 +2,8 @@
 Reads a MIDI object created by Tonejs/Midi and converts its data to Overwatch workshop rules.
 */
 
-
 "use strict";
+
 
 // Range of notes on the overwatch piano, 
 // based on the MIDI scale (0 - 127).
