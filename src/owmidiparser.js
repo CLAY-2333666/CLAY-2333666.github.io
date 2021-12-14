@@ -2,7 +2,6 @@
 Reads a MIDI object created by Tonejs/Midi and converts its data to Overwatch workshop rules.
 */
 
-
 "use strict";
 
 // Range of notes on the overwatch piano, 
@@ -13,7 +12,6 @@ const PIANO_RANGE = Object.freeze({
     MAX: 88
 });
 const OCTAVE = 12;
-
 
 /* Settings for parsing the midi data.
     - startTime: time (seconds) in the midi file when this script begins reading the data
